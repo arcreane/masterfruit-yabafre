@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -50,6 +51,8 @@ fun GuessANumberGame(modifier: Modifier = Modifier) {
     var score by remember { mutableStateOf(0) }
     val attemptsList = remember { mutableStateListOf<String>() }
     var randomNum by remember { mutableStateOf(0) }
+    var gameStarted by remember { mutableStateOf(false) }
+    var changeDifficulty by remember { mutableStateOf(false) }
 
     when (difficulty) {
         Difficulty.EASY -> randomNum = Random.nextInt(1, 11)
@@ -58,14 +61,16 @@ fun GuessANumberGame(modifier: Modifier = Modifier) {
     }
 
     Column(modifier = modifier.padding(16.dp)) {
-        Row {
-            Difficulty.values().forEach { diff ->
-                Row(Modifier.padding(8.dp)) {
-                    RadioButton(
-                        selected = difficulty == diff,
-                        onClick = { difficulty = diff }
-                    )
-                    Text(text = diff.name, Modifier.padding(start = 8.dp))
+        if (!gameStarted) {
+            Row {
+                Difficulty.values().forEach { diff ->
+                    Row(Modifier.padding(8.dp)) {
+                        RadioButton(
+                            selected = difficulty == diff,
+                            onClick = { difficulty = diff; gameStarted = true }
+                        )
+                        Text(text = diff.name)
+                    }
                 }
             }
         }
@@ -103,8 +108,29 @@ fun GuessANumberGame(modifier: Modifier = Modifier) {
         }
 
         Text("Score: $score", Modifier.padding(top = 16.dp))
+
+        if (attempts >= maxAttempts) {
+            Row(Modifier.padding(8.dp)) {
+                Checkbox(
+                    checked = changeDifficulty,
+                    onCheckedChange = { changeDifficulty = it },
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(text = "Changer la difficulté")
+            }
+            if (changeDifficulty) {
+                Difficulty.values().forEach { diff ->
+                    RadioButton(
+                        selected = difficulty == diff,
+                        onClick = { difficulty = diff; gameStarted = false; changeDifficulty = false; attempts = 0 }
+                    )
+                    Text(text = diff.name, Modifier.padding(start = 8.dp))
+                }
+            }
+        }
     }
 }
+
 
 
 @Preview(showBackground = true)

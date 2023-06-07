@@ -23,6 +23,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import com.example.masterfruit_yabafre.ui.theme.MasterfruityabafreTheme
 
 class WordScrambler : ComponentActivity() {
@@ -56,19 +62,36 @@ fun WordScramblerGame(modifier: Modifier = Modifier) {
     var currentWord by remember { mutableStateOf(wordList.random()) }
     var scrambledWord by remember { mutableStateOf(currentWord.scramble()) }
     val attempts = remember { mutableStateListOf<String>() }
+    var gameStarted by remember { mutableStateOf(false) }
+    var changeDifficulty by remember { mutableStateOf(false) }
+    var timeLeft by remember { mutableStateOf(60) }
+
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = timeLeft) {
+        if (gameStarted) {
+            while (timeLeft > 0) {
+                delay(1000L)
+                timeLeft -= 1
+            }
+        }
+    }
 
     Column(modifier = modifier) {
-        Row {
-            Difficulty.values().forEach { diff ->
-                RadioButton(
-                    selected = difficulty == diff,
-                    onClick = { difficulty = diff }
-                )
-                Text(text = diff.name)
+        if (!gameStarted) {
+            Row {
+                Difficulty.values().forEach { diff ->
+                    RadioButton(
+                        selected = difficulty == diff,
+                        onClick = { difficulty = diff; gameStarted = true }
+                    )
+                    Text(text = diff.name)
+                }
             }
         }
 
         Text(text = "Scrambled Word: $scrambledWord")
+        Text(text = "Time left: $timeLeft")
 
         OutlinedTextField(
             value = guess,
@@ -98,9 +121,28 @@ fun WordScramblerGame(modifier: Modifier = Modifier) {
         }
 
         Text("Score: $score", Modifier.padding(top = 16.dp))
+
+        if (timeLeft <= 0) {
+            Row(Modifier.padding(8.dp)) {
+                Checkbox(
+                    checked = changeDifficulty,
+                    onCheckedChange = { changeDifficulty = it },
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(text = "Changer la difficulté")
+            }
+            if (changeDifficulty) {
+                Difficulty.values().forEach { diff ->
+                    RadioButton(
+                        selected = difficulty == diff,
+                        onClick = { difficulty = diff }
+                    )
+                    Text(text = diff.name, Modifier.padding(start = 8.dp))
+                }
+            }
+        }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
