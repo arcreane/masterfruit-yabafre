@@ -30,7 +30,6 @@ class WordScrambler : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MasterfruityabafreTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -74,7 +73,7 @@ fun WordScramblerGame(modifier: Modifier = Modifier) {
         OutlinedTextField(
             value = guess,
             onValueChange = { guess = it },
-            label = { Text("Enter your guess") }
+            label = { Text("Entrer un mot") }
         )
 
         Button(onClick = {
@@ -84,14 +83,14 @@ fun WordScramblerGame(modifier: Modifier = Modifier) {
                     score += 1
                     currentWord = wordList.random()
                     scrambledWord = currentWord.scramble()
-                    attempts.add("$userGuess - Correct!")
+                    attempts.add("$userGuess - Bravo!")
                 } else {
                     attempts.add("$userGuess - Incorrect")
                 }
                 guess = ""
             }
         }, Modifier.padding(top = 16.dp)) {
-            Text("Submit")
+            Text("Valider")
         }
 
         attempts.forEach { attempt ->

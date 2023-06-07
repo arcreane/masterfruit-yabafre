@@ -73,7 +73,7 @@ fun GuessANumberGame(modifier: Modifier = Modifier) {
         OutlinedTextField(
             value = guess,
             onValueChange = { guess = it },
-            label = { Text("Enter your guess") },
+            label = { Text("Entrer un nombre") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
@@ -84,16 +84,16 @@ fun GuessANumberGame(modifier: Modifier = Modifier) {
                 progress = attempts.toFloat() / maxAttempts
                 if (userGuess == randomNum) {
                     score = maxAttempts - attempts
-                    attemptsList.add("$userGuess - Correct!")
+                    attemptsList.add("$userGuess - Bravo!")
                 } else if (userGuess < randomNum) {
-                    attemptsList.add("$userGuess - Too low")
+                    attemptsList.add("$userGuess - Trop petit")
                 } else {
-                    attemptsList.add("$userGuess - Too high")
+                    attemptsList.add("$userGuess - Trop grand")
                 }
                 guess = ""
             }
         }, Modifier.padding(top = 16.dp)) {
-            Text("Submit")
+            Text("Valider")
         }
 
         LinearProgressIndicator(progress = progress, Modifier.padding(top = 16.dp))

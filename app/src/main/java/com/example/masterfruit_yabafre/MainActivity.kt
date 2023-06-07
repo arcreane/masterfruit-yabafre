@@ -26,7 +26,8 @@ class MainActivity : ComponentActivity() {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Button(onClick = {
                             startActivity(Intent(this@MainActivity, GuessANumber::class.java))
-                        }) {
+                        })
+                        {
                             Text("Play Guess A Number")
                         }
 
