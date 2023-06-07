@@ -77,7 +77,10 @@ fun WordScramblerGame(modifier: Modifier = Modifier) {
         }
     }
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.padding(16.dp)) {
+        Row{
+            Text(text = "Difficulté: $difficulty")
+        }
         if (!gameStarted) {
             Row {
                 Difficulty.values().forEach { diff ->

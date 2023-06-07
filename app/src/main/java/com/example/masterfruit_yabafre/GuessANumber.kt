@@ -61,16 +61,17 @@ fun GuessANumberGame(modifier: Modifier = Modifier) {
     }
 
     Column(modifier = modifier.padding(16.dp)) {
+        Row{
+            Text(text = "Difficulté: $difficulty")
+        }
         if (!gameStarted) {
             Row {
                 Difficulty.values().forEach { diff ->
-                    Row(Modifier.padding(8.dp)) {
-                        RadioButton(
-                            selected = difficulty == diff,
-                            onClick = { difficulty = diff; gameStarted = true }
-                        )
-                        Text(text = diff.name)
-                    }
+                    RadioButton(
+                        selected = difficulty == diff,
+                        onClick = { difficulty = diff; gameStarted = true }
+                    )
+                    Text(text = diff.name)
                 }
             }
         }
