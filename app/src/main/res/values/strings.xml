@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">masterfruit-yabafre</string>
+    <string name="title_activity_guess_anumber">GuessANumber</string>
+    <string name="title_activity_word_scrambler">WordScrambler</string>
+</resources>
