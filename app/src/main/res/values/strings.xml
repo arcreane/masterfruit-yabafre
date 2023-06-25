@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">masterfruit-yabafre</string>
+    <string name="guess_a_number">Guess A Number</string>
+    <string name="word_scrambler">Word Scrambler</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="enter_your_guess_here">Enter your guess here</string>
+    <string name="guess">Guess</string>
+    <string name="result_will_be_shown_here">Result will be shown here</string>
+    <string name="scrambled_word_here">Scrambled Word Here</string>
+    <string name="score_0">Score: 0</string>
+    <string name="time_remaining_60s">Time Remaining: 60s</string>
+</resources>
